@@ -8,7 +8,7 @@
 * **作者姓名**：林士璿
 * **硬體平台**：NUCLEO-G474RE
 * **核心技術**：EXTI + TIM2 + USART2
-* **GitHub 專案網址**：`https://github.com/0002872/B11353019_` *
+* **GitHub 專案網址**：`https://github.com/0002872/B11353019_` 
 
 ---
 
@@ -33,19 +33,19 @@
 ## 3. 硬體對應與腳位配置 (Hardware Alignment & Pin Map)
 
 ### 3.1 故事世界與硬體替身 (Hardware Replacement)
-* **決鬥號令三色燈**：`PA5`（綠燈/開火）、`PA6`（黃燈/預備）、`PA7`（紅燈/犯規或逾時）[cite: 16]
-* **決鬥感應扳機**：板上使用者藍色按鍵 B1（`PC13`），觸發 EXTI 中斷[cite: 16]。
-* **生死對決計時器**：`TIM2`（170MHz 主頻，$\text{PSC}=169, \text{ARR}=999$，每 $1\text{ ms}$ 產生一次中斷）[cite: 14, 21]。
-* **戰績雲端榜**：`USART2`（波特率 115200, 8N1），透過 Serial 終端機即時輸出成績與歷史最佳紀錄[cite: 14, 16]。
+* **決鬥號令三色燈**：`PA5`（綠燈/開火）、`PA6`（黃燈/預備）、`PA7`（紅燈/犯規或逾時）
+* **決鬥感應扳機**：板上使用者藍色按鍵 B1（`PC13`），觸發 EXTI 中斷。
+* **生死對決計時器**：`TIM2`（170MHz 主頻，$\text{PSC}=169, \text{ARR}=999$，每 $1\text{ ms}$ 產生一次中斷）。
+* **戰績雲端榜**：`USART2`（波特率 115200, 8N1），透過 Serial 終端機即時輸出成績與歷史最佳紀錄。
 
 ### 3.2 NUCLEO-G474RE 實體腳位分配表
 | MCU 腳位 (Pin) | 硬體替身元件 | 工作模式 / 暫存器配置 | 用途描述 |
 | :--- | :--- | :--- | :--- |
-| **PA5** | 綠色單色 LED (板上 LD2) | GPIO Output (Push-Pull) | 拔槍號令燈（亮起瞬間開啟 TIM2 計時）[cite: 16] |
-| **PA6** | 黃色單色 LED | GPIO Output (Push-Pull) | 預備警戒燈（進入 1~4 秒隨機倒數）[cite: 16] |
-| **PA7** | 紅色單色 LED | GPIO Output (Push-Pull) | 犯規/逾時燈（偷跑或超過 1 秒未拔槍）[cite: 16] |
-| **PC13** | 板上藍色按鍵 (B1) | EXTI Line13 (Falling Edge) | 生死扳機按鍵（觸發捕獲反應時間）[cite: 16] |
-| **PA2 / PA3** | ST-LINK Virtual COM Port | USART2 AF (TX/RX) | 電腦終端機傳輸（115200 Baud rate）[cite: 16] |
+| **PA5** | 綠色單色 LED (板上 LD2) | GPIO Output (Push-Pull) | 拔槍號令燈（亮起瞬間開啟 TIM2 計時） |
+| **PA6** | 黃色單色 LED | GPIO Output (Push-Pull) | 預備警戒燈（進入 1~4 秒隨機倒數）|
+| **PA7** | 紅色單色 LED | GPIO Output (Push-Pull) | 犯規/逾時燈（偷跑或超過 1 秒未拔槍） |
+| **PC13** | 板上藍色按鍵 (B1) | EXTI Line13 (Falling Edge) | 生死扳機按鍵（觸發捕獲反應時間） |
+| **PA2 / PA3** | ST-LINK Virtual COM Port | USART2 AF (TX/RX) | 電腦終端機傳輸（115200 Baud rate） |
 
 ---
 
@@ -77,10 +77,10 @@
 
 ## 5. 系統架構與狀態轉換 (System Architecture & State Machine)
 
-1. **IDLE / PREPARE 狀態**：終端機輸入 `new` 或按下 B1 啟動，亮黃燈（`PA6=1`），隨機等待 $1 \sim 4$ 秒[cite: 15]。
-2. **EARLY TRIGGER 判斷**：若等待期間提前按下 B1，轉入 **FAIL 狀態**，亮紅燈並回報 `Early/Fail`[cite: 15, 17]。
-3. **FIRE / TIMING 狀態**：隨機等待結束，熄黃燈、亮綠燈（`PA5=1`），啟動 TIM2 記數[cite: 15]。
-4. **SUCCESS / TIMEOUT 判斷**： $1\text{ s}$ 內按下 B1 則記錄毫秒成績 (`SUCCESS`)；超過 $1\text{ s}$ 未按則自動轉紅燈判罰 (`Timeout`)[cite: 15, 17]。
+1. **IDLE / PREPARE 狀態**：終端機輸入 `new` 或按下 B1 啟動，亮黃燈（`PA6=1`），隨機等待 $1 \sim 4$ 秒。
+2. **EARLY TRIGGER 判斷**：若等待期間提前按下 B1，轉入 **FAIL 狀態**，亮紅燈並回報 `Early/Fail`。
+3. **FIRE / TIMING 狀態**：隨機等待結束，熄黃燈、亮綠燈（`PA5=1`），啟動 TIM2 記數。
+4. **SUCCESS / TIMEOUT 判斷**： $1\text{ s}$ 內按下 B1 則記錄毫秒成績 (`SUCCESS`)；超過 $1\text{ s}$ 未按則自動轉紅燈判罰 (`Timeout`)。
 
 ---
 
@@ -88,10 +88,10 @@
 
 | 驗收項目 | 測試動作 | 預期結果 | 實際驗收結果 | 判定 |
 | :--- | :--- | :--- | :--- | :---: |
-| **1. 預備啟動驗收** | 終端機輸入 `new` 或按下 B1 | 黃燈即時亮起，進入 1~4 秒隨機倒數狀態 | 黃燈亮起，隨機等待延時正常 | **[ 過 ]**[cite: 17] |
-| **2. 偷跑/犯規判定** | 隨機等待結束（綠燈亮）前按下 B1 | $0.1\text{ s}$ 內轉紅燈，終端機輸出 `Early/Fail` | 即時轉紅燈，終端機印出 `Early Trigger!` | **[ 過 ]**[cite: 17] |
-| **3. 正常拔槍計時** | 綠燈亮起後 $1\text{ s}$ 內按下 B1 | 綠燈滅，輸出 `Reaction Time: xxx ms, SUCCESS` | 成功紀錄毫秒時間（如 $235\text{ ms}$） | **[ 過 ]**[cite: 17] |
-| **4. 逾時未拔槍** | 綠燈亮起後超過 $1\text{ s}$ 未按 B1 | 自動轉紅燈，終端機顯示 `Timeout` | 超過 $1000\text{ ms}$ 自動切換紅燈並警告 | **[ 過 ]**[cite: 17] |
+| **1. 預備啟動驗收** | 終端機輸入 `new` 或按下 B1 | 黃燈即時亮起，進入 1~4 秒隨機倒數狀態 | 黃燈亮起，隨機等待延時正常 | **[ 過 ]** |
+| **2. 偷跑/犯規判定** | 隨機等待結束（綠燈亮）前按下 B1 | $0.1\text{ s}$ 內轉紅燈，終端機輸出 `Early/Fail` | 即時轉紅燈，終端機印出 `Early Trigger!` | **[ 過 ]**|
+| **3. 正常拔槍計時** | 綠燈亮起後 $1\text{ s}$ 內按下 B1 | 綠燈滅，輸出 `Reaction Time: xxx ms, SUCCESS` | 成功紀錄毫秒時間（如 $235\text{ ms}$） | **[ 過 ]** |
+| **4. 逾時未拔槍** | 綠燈亮起後超過 $1\text{ s}$ 未按 B1 | 自動轉紅燈，終端機顯示 `Timeout` | 超過 $1000\text{ ms}$ 自動切換紅燈並警告 | **[ 過 ]** |
 
 ---
 
@@ -116,11 +116,11 @@
 ## 8. AI 揭露與開發查核說明 (AI Disclosure & Checklist)
 
 ### 8.1 AI 工具協助範圍
-* 專題整體 C 語言狀態機架構與邏輯擬定[cite: 18]。
-* `TIM2` 時脈分頻係數（$\text{PSC} = 169, \text{ARR} = 999$）算式驗證與生成[cite: 18]。
-* `USART2` 格式化字串輸出語法優化[cite: 18]。
+* 專題整體 C 語言狀態機架構與邏輯擬定。
+* `TIM2` 時脈分頻係數（$\text{PSC} = 169, \text{ARR} = 999$）算式驗證與生成。
+* `USART2` 格式化字串輸出語法優化。
 
 ### 8.2 開發者親自查核事項
-* **查核 RM0440 Reference Manual**：驗證 STM32G474 在 $170\text{ MHz}$ 時脈下 `TIM2` $1\text{ ms}$ 計數精準度[cite: 18]。
-* **實測 EXTI13 (PC13)**：按鍵機械彈跳時間，經實測加入 $50\text{ ms}$ 軟體去彈跳機制[cite: 18]。
-* **實測 GPIO 電壓**：實測三顆 LED 腳位（`PA5/PA6/PA7`）推挽輸出電壓（$3.3\text{ V}$）與對應限流電阻[cite: 18]。
+* **查核 RM0440 Reference Manual**：驗證 STM32G474 在 $170\text{ MHz}$ 時脈下 `TIM2` $1\text{ ms}$ 計數精準度。
+* **實測 EXTI13 (PC13)**：按鍵機械彈跳時間，經實測加入 $50\text{ ms}$ 軟體去彈跳機制。
+* **實測 GPIO 電壓**：實測三顆 LED 腳位（`PA5/PA6/PA7`）推挽輸出電壓（$3.3\text{ V}$）與對應限流電阻。
