@@ -33,7 +33,7 @@
 ## 3. 硬體對應與腳位配置 (Hardware Alignment & Pin Map)
 
 ### 3.1 故事世界與硬體替身 (Hardware Replacement)
-* **決鬥號令三色燈**：`PA5`（綠燈/開火）、`PA6`（黃燈/預備）、`PA7`（紅燈/犯規或逾時）
+* **決鬥號令三色燈**：`PC5`（綠燈/開火）、`PC6`（黃燈/預備）、`PC8`（紅燈/犯規或逾時）
 * **決鬥感應扳機**：板上使用者藍色按鍵 B1（`PC13`），觸發 EXTI 中斷。
 * **生死對決計時器**：`TIM2`（170MHz 主頻，$\text{PSC}=169, \text{ARR}=999$，每 $1\text{ ms}$ 產生一次中斷）。
 * **戰績雲端榜**：`USART2`（波特率 115200, 8N1），透過 Serial 終端機即時輸出成績與歷史最佳紀錄。
@@ -41,9 +41,9 @@
 ### 3.2 NUCLEO-G474RE 實體腳位分配表
 | MCU 腳位 (Pin) | 硬體替身元件 | 工作模式 / 暫存器配置 | 用途描述 |
 | :--- | :--- | :--- | :--- |
-| **PA5** | 綠色單色 LED (板上 LD2) | GPIO Output (Push-Pull) | 拔槍號令燈（亮起瞬間開啟 TIM2 計時） |
-| **PA6** | 黃色單色 LED | GPIO Output (Push-Pull) | 預備警戒燈（進入 1~4 秒隨機倒數）|
-| **PA7** | 紅色單色 LED | GPIO Output (Push-Pull) | 犯規/逾時燈（偷跑或超過 1 秒未拔槍） |
+| **PC5** | 綠色單色 LED | GPIO Output (Push-Pull) | 拔槍號令燈（亮起瞬間開啟 TIM2 計時） |
+| **PC6** | 黃色單色 LED | GPIO Output (Push-Pull) | 預備警戒燈（進入 1~4 秒隨機倒數）|
+| **PC8** | 紅色單色 LED | GPIO Output (Push-Pull) | 犯規/逾時燈（偷跑或超過 1 秒未拔槍） |
 | **PC13** | 板上藍色按鍵 (B1) | EXTI Line13 (Falling Edge) | 生死扳機按鍵（觸發捕獲反應時間） |
 | **PA2 / PA3** | ST-LINK Virtual COM Port | USART2 AF (TX/RX) | 電腦終端機傳輸（115200 Baud rate） |
 
