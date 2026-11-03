@@ -97,19 +97,19 @@
 
 ## 7. 技術勾選表 (Technical Checklist)
 
-* [x] **GPIO 輸出**：紅綠黃燈：`PA5` (綠), `PA6` (黃), `PA7` (紅) \| `MODER = 01` \| `BSRR` 設 / 清[cite: 21]
-* [x] **GPIO 輸入**：B1 按鍵拔槍 \| `PC13` \| `MODER = 00` \| EXTI 的來源腳[cite: 21]
-* [x] **複用功能 AF**：上傳串口資料：USART2 收發 \| `PA2 / PA3` \| `MODER = 10` \| `AFR` 選 `AF7`[cite: 21]
-* [x] **時脈**：PLL 170 MHz \| `HSI16` 主時脈基準 \| 系統運作與計時基準[cite: 21]
-* [x] **外部中斷 EXTI**：B1 一按 = 扣扳機 \| `EXTICR4` 選 `PC13` \| `FTSR1` (下降沿觸發) \| `IMR1` \| `PR1` 寫 1 清除[cite: 21]
-* [x] **NVIC 致能**：三支 ISR 均配置中斷服務 \| `TIM2`, `EXTI15_10`, `USART2` 三個 IRQ[cite: 21]
-* [ ] **優先權與巢狀**：未額外設定優先權階層[cite: 21]
-* [x] **軟體去彈跳**：按鍵去彈跳處理 \| 時間戳：$\text{ticks} - t_{\text{btn}} \ge 50\text{ ms}$ 才算一次有效按壓[cite: 21]
-* [x] **UART 傳送**：成績上報：每次事件 `report()` 一行 \| USART2 115200 8N1 \| `BRR = 1476` \| 輪詢 `TXE`[cite: 21]
-* [x] **UART 接收 + 環形緩衝**：命令接收：`new` 指令解析 \| `RXNE` 中斷入列 \| 主迴圈出列解析[cite: 21]
-* [x] **Timer 定時中斷**：計時週期 $1\text{ ms}$ \| `TIM2 PSC = 169`, `ARR = 999` \| $1\text{ ms}$ `UIF` 溢位中斷，累加毫秒數[cite: 21]
-* [ ] **PWM**：本專題未用到 PWM[cite: 21]
-* [ ] **輸入捕捉**：本專題未用到 Timer Input Capture[cite: 21]
+* [x] **GPIO 輸出**：紅綠黃燈：`PA5` (綠), `PA6` (黃), `PA7` (紅) \| `MODER = 01` \| `BSRR` 設 / 清
+* [x] **GPIO 輸入**：B1 按鍵拔槍 \| `PC13` \| `MODER = 00` \| EXTI 的來源腳
+* [x] **複用功能 AF**：上傳串口資料：USART2 收發 \| `PA2 / PA3` \| `MODER = 10` \| `AFR` 選 `AF7`
+* [x] **時脈**：PLL 170 MHz \| `HSI16` 主時脈基準 \| 系統運作與計時基準
+* [x] **外部中斷 EXTI**：B1 一按 = 扣扳機 \| `EXTICR4` 選 `PC13` \| `FTSR1` (下降沿觸發) \| `IMR1` \| `PR1` 寫 1 清除
+* [x] **NVIC 致能**：三支 ISR 均配置中斷服務 \| `TIM2`, `EXTI15_10`, `USART2` 三個 IRQ
+* [ ] **優先權與巢狀**：未額外設定優先權階層
+* [x] **軟體去彈跳**：按鍵去彈跳處理 \| 時間戳：$\text{ticks} - t_{\text{btn}} \ge 50\text{ ms}$ 才算一次有效按壓
+* [x] **UART 傳送**：成績上報：每次事件 `report()` 一行 \| USART2 115200 8N1 \| `BRR = 1476` \| 輪詢 `TXE`
+* [x] **UART 接收 + 環形緩衝**：命令接收：`new` 指令解析 \| `RXNE` 中斷入列 \| 主迴圈出列解析
+* [x] **Timer 定時中斷**：計時週期 $1\text{ ms}$ \| `TIM2 PSC = 169`, `ARR = 999` \| $1\text{ ms}$ `UIF` 溢位中斷，累加毫秒數
+* [ ] **PWM**：本專題未用到 PWM
+* [ ] **輸入捕捉**：本專題未用到 Timer Input Capture
 
 ---
 
