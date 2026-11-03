@@ -77,9 +77,9 @@
 
 ## 5. 系統架構與狀態轉換 (System Architecture & State Machine)
 
-1. **IDLE / PREPARE 狀態**：終端機輸入 `new` 或按下 B1 啟動，亮黃燈（`PA6=1`），隨機等待 $1 \sim 4$ 秒。
+1. **IDLE / PREPARE 狀態**：終端機輸入 `new` 或按下 B1 啟動，亮黃燈（`PC6=1`），隨機等待 $1 \sim 4$ 秒。
 2. **EARLY TRIGGER 判斷**：若等待期間提前按下 B1，轉入 **FAIL 狀態**，亮紅燈並回報 `Early/Fail`。
-3. **FIRE / TIMING 狀態**：隨機等待結束，熄黃燈、亮綠燈（`PA5=1`），啟動 TIM2 記數。
+3. **FIRE / TIMING 狀態**：隨機等待結束，熄黃燈、亮綠燈（`PC5=1`），啟動 TIM2 記數。
 4. **SUCCESS / TIMEOUT 判斷**： $1\text{ s}$ 內按下 B1 則記錄毫秒成績 (`SUCCESS`)；超過 $1\text{ s}$ 未按則自動轉紅燈判罰 (`Timeout`)。
 
 ---
@@ -97,7 +97,7 @@
 
 ## 7. 技術勾選表 (Technical Checklist)
 
-* [x] **GPIO 輸出**：紅綠黃燈：`PA5` (綠), `PA6` (黃), `PA7` (紅) \| `MODER = 01` \| `BSRR` 設 / 清
+* [x] **GPIO 輸出**：紅綠黃燈：`PC5` (綠), `PC6` (黃), `PC8` (紅) \| `MODER = 01` \| `BSRR` 設 / 清
 * [x] **GPIO 輸入**：B1 按鍵拔槍 \| `PC13` \| `MODER = 00` \| EXTI 的來源腳
 * [x] **複用功能 AF**：上傳串口資料：USART2 收發 \| `PA2 / PA3` \| `MODER = 10` \| `AFR` 選 `AF7`
 * [x] **時脈**：PLL 170 MHz \| `HSI16` 主時脈基準 \| 系統運作與計時基準
