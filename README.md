@@ -8,7 +8,7 @@
 * **作者姓名**：林士璿
 * **硬體平台**：NUCLEO-G474RE
 * **核心技術**：EXTI + TIM2 + USART2
-* **GitHub 專案網址**：`https://github.com/your-id/gunfighter-reaction-simulator` *(請依實際 GitHub 帳號修訂)*[cite: 20]
+* **GitHub 專案網址**：`https://github.com/0002872/B11353019_` *
 
 ---
 
